@@ -148,7 +148,7 @@ public class Connection_DB extends JFrame {
             //"#ix3l_06#"
 
 
-            ResultSet rs = queriesSerice.badQueries.selectQ(("select klient_imie from bd4_klient"), service.ussers.get("IX3L_06"));
+            ResultSet rs = queriesSerice.goodQueries.selectQ(("select klient_imie from bd4_klient"), service.ussers.get("IX3L_06"));
             while (rs.next())
             {
                 String x = rs.getString("klient_imie");

@@ -91,7 +91,7 @@ public class Connection_DB extends JFrame {
                                 panelU.add(new JLabel("Insert queries")).setBounds(10,20,80,25);
                                 panelU.add(label).setBounds(10,400,100,100);
                                 buttonBad = new JButton("Bad Procces");
-                                buttonBad.setBounds(10,80,80,25);
+                                buttonBad.setBounds(10,80,180,25);
                                 panelU.add(buttonBad);
                                 frameUsser.add(panelU);
                                 panelU.add(textArea);
@@ -124,7 +124,7 @@ public class Connection_DB extends JFrame {
 
                                 buttonGood = new JButton("Good Procces");
                                 panelU.add(buttonGood);
-                                buttonGood.setBounds(10,120,80,25);
+                                buttonGood.setBounds(10,120,180,25);
                                 buttonGood.addActionListener(new ActionListener() {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {

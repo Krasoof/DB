@@ -27,6 +27,14 @@ public class Connection_DB extends JFrame {
     private static int y = 150;
 
 
+    static Thread thread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while(true)
+                frame.repaint();
+        }
+    });
+
 
 
 
@@ -34,11 +42,13 @@ public class Connection_DB extends JFrame {
     public static void main(String[] args) throws Exception {
 
 
+
         service = new UsserService();
         service.addUsser(new Usser("IX3L_06","#ix3l_06#"));
 
         QueriesSerice queriesSerice = new QueriesSerice( new GoodQueries(),new BadQueries());
             frame = new JFrame("DB");
+            thread.start();
             panel = new JPanel();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 400);
@@ -62,6 +72,8 @@ public class Connection_DB extends JFrame {
 
             button = new JButton("LogIn");
             button.setBounds(10,80,80,25);
+
+
 
 
             button.addActionListener(new ActionListener() {

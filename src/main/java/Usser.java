@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Objects;
@@ -9,6 +10,7 @@ public class Usser {
     String haslo;
     Connect connection;
     Statement statement;
+
 
 
     public Usser(String login, String haslo) throws SQLException {

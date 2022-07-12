@@ -47,7 +47,6 @@ public class Connection_DB extends JFrame {
 
 
         service = new UsserService();
-        service.addUsser(new Usser("IX3L_06","#ix3l_06#"));
 
         QueriesSerice queriesSerice = new QueriesSerice( new GoodQueries(),new BadQueries());
             frame = new JFrame("DB");
@@ -82,7 +81,6 @@ public class Connection_DB extends JFrame {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
                     try {
                         service.addUsser(new Usser(userText.getText(), passwordField.getText()));
                         succes.setText("Login succesful");
@@ -94,11 +92,12 @@ public class Connection_DB extends JFrame {
                             public void actionPerformed(ActionEvent e) {
                                 JButton buttonBad;
                                 JButton buttonGood;
+                                String tmp = userText.getText(); //NIE POWINNO TAK BYC ALE DZIALA
                                 JTextArea textArea = new JTextArea();
                                 textArea.setSize(200,200);
                                 textArea.setVisible(true);
                                 textArea.setBounds(10,150,500,100);
-                                textArea.append("hello world");
+                                textArea.append("Your output from base");
                                 JLabel label = new JLabel();
                                 JTextField field = new JTextField(20);
                                 JFrame frameUsser = new JFrame(userText.getText());
@@ -120,13 +119,12 @@ public class Connection_DB extends JFrame {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {
 
-                                        System.out.println("eee");
                                         textArea.setText("");
                                         panelU.add(textArea);
                                         try {
                                             ResultSet rs =
                                                     queriesSerice.badQueries.selectQ(field.getText(),
-                                                            service.ussers.get(userText.getText()));
+                                                            service.ussers.get(tmp));  // OWIJACZ, NIE POWINNO TAK BYC
                                             while (rs.next())
                                             {
                                                 String tmp =
@@ -139,6 +137,8 @@ public class Connection_DB extends JFrame {
                                             }
                                         } catch (SQLException ex) {
                                             ex.printStackTrace();
+                                            textArea.append(ex.getLocalizedMessage());
+                                            textArea.append("\n sprobuj ponownie");
                                         }
 
 
@@ -155,7 +155,7 @@ public class Connection_DB extends JFrame {
                                     public void actionPerformed(ActionEvent e) {
                                         textArea.setText("");
                                         try {
-                                            ResultSet rs = queriesSerice.goodQueries.selectQ(field.getText(),service.ussers.get(userText.getText()));
+                                            ResultSet rs = queriesSerice.goodQueries.selectQ(field.getText(),service.ussers.get(tmp)); // OWIJACZ NIE POWINNO TAK BYC ALE DZIALA
                                             while (rs.next())
                                             {
                                                 String tmp = rs.getString("klient_imie");
@@ -164,6 +164,9 @@ public class Connection_DB extends JFrame {
                                             }
                                         } catch (SQLException ex) {
                                             ex.printStackTrace();
+                                            textArea.setText(ex.getMessage());
+                                            textArea.append("\n sprobuj ponownie");
+
                                         }
 
                                     }
@@ -174,8 +177,9 @@ public class Connection_DB extends JFrame {
 
                         y +=30;
                         i++;
-                    } catch (SQLException ex) {
+                    } catch (Exception ex) {
                         ex.printStackTrace();
+                        succes.setText("Cannot log in, try again");
 
                     }
                 }

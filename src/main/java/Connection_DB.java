@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Connection_DB extends JFrame {
+
 
     private static JLabel password;
     private static JLabel label;
@@ -92,12 +95,17 @@ public class Connection_DB extends JFrame {
                                 JButton buttonBad;
                                 JButton buttonGood;
                                 JTextArea textArea = new JTextArea();
+                                textArea.setSize(200,200);
+                                textArea.setVisible(true);
+                                textArea.setBounds(10,150,500,100);
+                                textArea.append("hello world");
                                 JLabel label = new JLabel();
                                 JTextField field = new JTextField(20);
                                 JFrame frameUsser = new JFrame(userText.getText());
                                 JPanel panelU = new JPanel();
+                                panelU.add(textArea);
                                 panelU.setLayout(null);
-                                frameUsser.setSize(300,300);
+                                frameUsser.setSize(500,300);
                                 frameUsser.setVisible(true);
                                 panelU.add(field).setBounds(100,20,165,25);
                                 panelU.add(new JLabel("Insert queries")).setBounds(10,20,80,25);
@@ -105,13 +113,15 @@ public class Connection_DB extends JFrame {
                                 buttonBad = new JButton("Bad Procces");
                                 buttonBad.setBounds(10,80,180,25);
                                 panelU.add(buttonBad);
+
                                 frameUsser.add(panelU);
-                                panelU.add(textArea);
+
                                 buttonBad.addActionListener(new ActionListener() {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {
 
                                         System.out.println("eee");
+                                        textArea.setText("");
                                         panelU.add(textArea);
                                         try {
                                             ResultSet rs =
@@ -119,9 +129,12 @@ public class Connection_DB extends JFrame {
                                                             service.ussers.get(userText.getText()));
                                             while (rs.next())
                                             {
-                                                List<String> tmp = new ArrayList<>();
-                                                        tmp.add(rs.getString("klient_imie"));
+                                                String tmp =
+                                                        (rs.getString("klient_imie"));
                                                 System.out.println(tmp);
+
+                                                textArea.append(" ");
+                                                textArea.append(String.valueOf(tmp));
 
                                             }
                                         } catch (SQLException ex) {
@@ -140,12 +153,14 @@ public class Connection_DB extends JFrame {
                                 buttonGood.addActionListener(new ActionListener() {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {
+                                        textArea.setText("");
                                         try {
                                             ResultSet rs = queriesSerice.goodQueries.selectQ(field.getText(),service.ussers.get(userText.getText()));
                                             while (rs.next())
                                             {
                                                 String tmp = rs.getString("klient_imie");
-                                                System.out.println(tmp);
+
+                                               textArea.append(tmp);
                                             }
                                         } catch (SQLException ex) {
                                             ex.printStackTrace();
